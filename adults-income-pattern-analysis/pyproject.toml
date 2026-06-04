@@ -1,0 +1,17 @@
+[project]
+name = "adults-income-pattern-analysis"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "datafusion>=53.0.0",
+    "duckdb>=1.5.3",
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.9",
+    "pandas>=3.0.3",
+    "polars>=1.41.2",
+    "pyarrow>=24.0.0",
+    "plotly>=6.0.0",
+    "seaborn>=0.13.2",
+]
