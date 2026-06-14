@@ -1,0 +1,53 @@
+# Python-generated files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+wheels/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Rust / Cargo
+rust-benchmark/target/
+
+# Keep Cargo.lock for reproducible application builds.
+# If this repository is converted to a reusable library crate, consider ignoring it.
+!rust-benchmark/Cargo.lock
+
+# Generated benchmark data
+bench.parquet
+smoke.parquet
+*.parquet
+*.csv
+*.jsonl
+
+# Logs and runtime output
+*.log
+*.out
+*.err
+
+# Environment / local config
+.env
+.env.*
+!.env.example
+
+# Editor / IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS metadata
+.DS_Store
+Thumbs.db

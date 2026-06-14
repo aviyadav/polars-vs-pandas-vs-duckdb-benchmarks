@@ -1,0 +1,18 @@
+[package]
+name = "rust-benchmark"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+debug = false
+opt-level = 3
+
+[dependencies]
+anyhow = "1.0"
+async-trait = "0.1"
+datafusion = "45.0"
+duckdb = { version = "1.1", features = ["bundled"] }
+polars = { version = "0.46", features = ["parquet", "lazy", "dtype-full", "performant"] }
+rand = "0.8"
+sysinfo = "0.33"
+tokio = { version = "1", features = ["rt-multi-thread", "macros"] }
