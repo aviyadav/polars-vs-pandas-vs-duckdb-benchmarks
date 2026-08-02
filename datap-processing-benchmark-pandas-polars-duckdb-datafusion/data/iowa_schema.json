@@ -1,0 +1,66 @@
+{
+  "FactSales": {
+    "ID": "Int64",
+    "InvoiceItemNumber": "String",
+    "DateID": "Int32",
+    "StoreID": "Int32",
+    "CategoryID": "Int32",
+    "VendorID": "Int32",
+    "ItemID": "Int32",
+    "Pack": "Int32",
+    "BottleVolumeMl": "Int32",
+    "StateBottleCost": "Float64",
+    "StateBottleRetail": "Float64",
+    "BottlesSold": "Int32",
+    "SaleDollars": "Float64",
+    "VolumeSoldLiters": "Float64",
+    "VolumeSoldGallons": "Float64",
+    "PartitionKeyYear": "Int32",
+    "Inserted": "Datetime(ns)"
+  },
+  "DimCategory": {
+    "CategoryID": "Int64",
+    "CategoryName": "String",
+    "Inserted": "Datetime(ns)"
+  },
+  "DimDate": {
+    "DateID": "Int32",
+    "CalendarDate": "Date",
+    "CalendarYear": "Int32",
+    "CalendarMonth": "String",
+    "MonthOfYear": "Int32",
+    "CalendarDay": "String",
+    "DayOfWeek": "Int32",
+    "DayOfWeekStartMonday": "Int32",
+    "IsWeekDay": "String",
+    "DayOfMonth": "Int32",
+    "IsLastDayOfMonth": "String",
+    "DayOfYear": "Int32",
+    "WeekOfYearIso": "Int32",
+    "QuarterOfYear": "Int32",
+    "FiscalYearOctToSep": "Int32",
+    "FiscalMonthOctToSep": "Int32",
+    "FiscalYearJulToJun": "Int32",
+    "FiscalMonthJulToJun": "Int32"
+  },
+  "DimStore": {
+    "StoreID": "Int64",
+    "StoreName": "String",
+    "Address": "String",
+    "City": "String",
+    "ZipCode": "Int64",
+    "County": "String",
+    "StoreLocation": "String",
+    "Inserted": "Datetime(ns)"
+  },
+  "DimVendor": {
+    "VendorID": "Int64",
+    "VendorName": "String",
+    "Inserted": "Datetime(ns)"
+  },
+  "DimItem": {
+    "ItemID": "Int64",
+    "ItemName": "String",
+    "Inserted": "Datetime(ns)"
+  }
+}

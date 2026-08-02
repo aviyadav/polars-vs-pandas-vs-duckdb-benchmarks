@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# uv
+.python-version
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Profiling scratch
+profile_df.py
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
