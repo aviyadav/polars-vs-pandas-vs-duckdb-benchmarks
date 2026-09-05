@@ -81,6 +81,8 @@ uv run python arrow_impl/generate_dirty_data.py
 ### Option 1: Run Full Pipeline Orchestration
 ```bash
 uv run python arrow_impl/run_pipeline.py
+
+uv run python arrow_impl\generate_dirty_data.py --rows 10000000
 ```
 
 ### Option 2: Step-by-Step Execution

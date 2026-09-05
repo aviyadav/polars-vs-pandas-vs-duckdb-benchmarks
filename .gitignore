@@ -1,0 +1,7 @@
+/raw-data-to-analytics-medallion-arch-duckdb-pyarrow-datafusion/arrow_impl/storage
+/raw-data-to-analytics-medallion-arch-duckdb-pyarrow-datafusion/data
+/raw-data-to-analytics-medallion-arch-duckdb-pyarrow-datafusion/duck_impl/storage
+raw-data-to-analytics-medallion-arch-duckdb-pyarrow-datafusion/uv.lock
+raw-data-to-analytics-medallion-arch-duckdb-pyarrow-datafusion/data/events_arr.csv
+/raw-data-to-analytics-medallion-arch-duckdb-pyarrow-datafusion/data
+/raw-data-to-analytics-medallion-arch-duckdb-pyarrow-datafusion/data
