@@ -1,5 +1,5 @@
 [project]
-name = "datap-processing-benchmark-pandas-polars-duckdb-datafusion"
+name = "data-processing-benchmark-pandas-polars-duckdb-datafusion"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
