@@ -1,0 +1,22 @@
+[project]
+name = "generating-test-data-with-pandas-polars-and-duckdb"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "datafusion>=54.0.0",
+    "duckdb>=1.5.5",
+    "pandas>=3.0.3",
+    "polars>=1.44.1",
+    "psutil>=7.2.2",
+    "pyarrow<=23.0.1",
+    "numpy<=2.4",
+    "plotly",
+    "streamlit",
+    "cudf-cu12",
+    "cupy-cuda12x",
+    "ruff",
+]
+
+[[tool.uv.index]]
+name = "nvidia"
+url = "https://pypi.nvidia.com"
