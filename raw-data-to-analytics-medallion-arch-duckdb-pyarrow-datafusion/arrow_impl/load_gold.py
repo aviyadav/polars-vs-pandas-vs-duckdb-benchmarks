@@ -1,10 +1,9 @@
-from pathlib import Path
-import os
 import shutil
 import time
-import datafusion
-from datafusion import SessionContext
+from pathlib import Path
+
 import pyarrow.parquet as pq
+from datafusion import SessionContext
 
 # Resolve project paths dynamically
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -34,6 +33,7 @@ ctx = SessionContext()
 # 2. Register Cleaned Silver Table
 ctx.register_parquet("silver_events", str(SILVER_PARQUET_PATH))
 
+
 def safe_write_parquet(df, path: Path):
     if path.exists():
         if path.is_dir():
@@ -41,6 +41,7 @@ def safe_write_parquet(df, path: Path):
         else:
             path.unlink()
     df.write_parquet(str(path), compression="snappy")
+
 
 # ----------------------------------------------------------------------
 # Model A: Aggregate Data Mart (Daily Performance)
@@ -119,7 +120,13 @@ fact_rows = pq.read_metadata(FACT_PATH).num_rows
 dim_rows = pq.read_metadata(DIM_PATH).num_rows
 
 print("\nGold layer completed successfully!")
-print(f"  Daily Channel Mart Rows: {mart_rows:,} ({MART_PATH.stat().st_size / (1024*1024):.2f} MB)")
-print(f"  Fact Orders Rows:        {fact_rows:,} ({FACT_PATH.stat().st_size / (1024*1024):.2f} MB)")
-print(f"  Dim Users Rows:          {dim_rows:,} ({DIM_PATH.stat().st_size / (1024*1024):.2f} MB)")
+print(
+    f"  Daily Channel Mart Rows: {mart_rows:,} ({MART_PATH.stat().st_size / (1024 * 1024):.2f} MB)"
+)
+print(
+    f"  Fact Orders Rows:        {fact_rows:,} ({FACT_PATH.stat().st_size / (1024 * 1024):.2f} MB)"
+)
+print(
+    f"  Dim Users Rows:          {dim_rows:,} ({DIM_PATH.stat().st_size / (1024 * 1024):.2f} MB)"
+)
 print(f"  Total Gold Runtime:      {total_elapsed:.2f} seconds")

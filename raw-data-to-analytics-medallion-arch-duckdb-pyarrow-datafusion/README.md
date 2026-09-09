@@ -15,6 +15,8 @@ Both pipelines ingest the same event schema, apply the same quality gates, and p
 |---|---|---|---|
 | [`duck_impl/`](duck_impl/) | DuckDB (C++ vectorized SQL) | `duck_impl/storage/warehouse.duckdb` | [DuckDB README](duck_impl/README.md) |
 | [`arrow_impl/`](arrow_impl/) | PyArrow + DataFusion (Rust) | `arrow_impl/storage/{bronze,silver,gold}/*.parquet` | [Arrow README](arrow_impl/README.md) |
+| [`duck_impl_v2/`](duck_impl_v2/) | DuckDB (incremental v2) | `duck_impl_v2/storage/warehouse.duckdb` | [Incremental DuckDB README](duck_impl_v2/README.md) |
+| [`arrow_impl_v2/`](arrow_impl_v2/) | PyArrow + DataFusion (incremental v2) | `arrow_impl_v2/storage/{bronze,silver,gold}/*.parquet` | [Incremental Arrow README](arrow_impl_v2/README.md) |
 
 Shared landing zone: [`data/`](data/)
 
@@ -84,6 +86,26 @@ raw-data-to-analytics-medallion-arch-duckdb/
 │   ├── load_gold.py
 │   ├── run_pipeline.py
 │   └── README.md
+├── duck_impl_v2/                   # DuckDB incremental lakehouse
+│   ├── storage/warehouse.duckdb
+│   ├── logs/
+│   ├── generate_dirty_data.py       # writes data/events_duck_<ts>.csv
+│   ├── load_bronze.py
+│   ├── load_silver.py
+│   ├── load_gold.py
+│   ├── run_pipeline.py
+│   └── README.md
+├── arrow_impl_v2/                   # PyArrow + DataFusion incremental lakehouse
+│   ├── storage/
+│   │   ├── bronze/                  # one Parquet per landed CSV
+│   │   ├── silver/                  # one Parquet per promoted Bronze file
+│   │   └── gold/*.parquet
+│   ├── generate_dirty_data.py       # writes data/events_arr_<ts>.csv
+│   ├── load_bronze.py
+│   ├── load_silver.py
+│   ├── load_gold.py
+│   ├── run_pipeline.py
+│   └── README.md
 ├── pyproject.toml
 └── README.md                      # This file
 ```
@@ -114,6 +136,10 @@ uv run python duck_impl/generate_dirty_data.py
 
 # Arrow dataset (default 1M rows → data/events_arr.csv)
 uv run python arrow_impl/generate_dirty_data.py
+
+# Incremental v2 datasets (timestamped CSVs in data/)
+uv run python duck_impl_v2/generate_dirty_data.py      # → data/events_duck_<ts>.csv
+uv run python arrow_impl_v2/generate_dirty_data.py     # → data/events_arr_<ts>.csv
 ```
 
 Then run either pipeline end-to-end:
@@ -124,12 +150,21 @@ uv run python duck_impl/run_pipeline.py
 
 # Arrow: CSV → Parquet lakehouse (bronze / silver / gold)
 uv run python arrow_impl/run_pipeline.py
+
+# Incremental v2 counterparts (idempotent on re-runs)
+uv run python duck_impl_v2/run_pipeline.py
+uv run python arrow_impl_v2/run_pipeline.py
 ```
 
 Step-by-step commands, quality rules, and query examples live in the implementation READMEs:
 
 - [DuckDB pipeline](duck_impl/README.md)
 - [PyArrow + DataFusion pipeline](arrow_impl/README.md)
+- [Incremental Arrow v2 pipeline](arrow_impl_v2/README.md)
+
+### v2: Incremental, rerunnable pipelines
+
+`duck_impl_v2` and `arrow_impl_v2` are rerunnable, incremental counterparts. They land only **new** CSV files, promote only unprocessed Bronze batches to Silver, and keep Gold correct on every run (DuckDB uses primary keys + upserts; Arrow/DataFusion uses copy-on-write Parquet recomputation).
 
 ---
 
@@ -159,3 +194,7 @@ Country is uppercased, channel is lowercased, and non-numeric revenue characters
 | Best fit | Fast local warehouse | Engine-agnostic lakehouse files |
 
 The same comparison table, with extra query snippets, is in the [Arrow README](arrow_impl/README.md#️-comparison-duckdb-vs-pyarrow--datafusion).
+
+
+*** Run as cron***
+0 2 * * * cd /mnt/data/python/my_raw_data_to_analytics && /usr/local/bin/uv run run_pipeline.py >> logs/cron.log 2>&1

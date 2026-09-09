@@ -1,10 +1,9 @@
-from pathlib import Path
-import os
 import shutil
 import time
-import datafusion
-from datafusion import SessionContext
+from pathlib import Path
+
 import pyarrow.parquet as pq
+from datafusion import SessionContext
 
 # Resolve project paths dynamically
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -22,7 +21,9 @@ if not BRONZE_PARQUET_PATH.exists():
         "Please execute 'load_bronze.py' first."
     )
 
-print("Initializing Silver layer processing (cleaning, type casting & quality gates)...")
+print(
+    "Initializing Silver layer processing (cleaning, type casting & quality gates)..."
+)
 start_time = time.time()
 
 # 1. Initialize Apache DataFusion SessionContext
@@ -87,7 +88,9 @@ WHERE event_date IS NOT NULL
   AND revenue IS NOT NULL AND revenue >= 0.0 AND revenue <= 10000.0
 """
 
-print(f"Applying transformation rules and writing to Silver Parquet: {SILVER_PARQUET_PATH}...")
+print(
+    f"Applying transformation rules and writing to Silver Parquet: {SILVER_PARQUET_PATH}..."
+)
 df_silver = ctx.sql(silver_query)
 
 # Clean target path if it already exists
@@ -111,6 +114,8 @@ file_size_mb = SILVER_PARQUET_PATH.stat().st_size / (1024 * 1024)
 print("Silver layer completed successfully!")
 print(f"  Bronze Source Rows:  {bronze_rows:,}")
 print(f"  Silver Clean Rows:   {silver_rows:,}")
-print(f"  Filtered Anomalies:  {filtered_rows:,} ({(filtered_rows / bronze_rows) * 100:.2f}%)")
+print(
+    f"  Filtered Anomalies:  {filtered_rows:,} ({(filtered_rows / bronze_rows) * 100:.2f}%)"
+)
 print(f"  Output Parquet:      {SILVER_PARQUET_PATH} ({file_size_mb:.2f} MB)")
 print(f"  Execution Time:      {elapsed:.2f} seconds")

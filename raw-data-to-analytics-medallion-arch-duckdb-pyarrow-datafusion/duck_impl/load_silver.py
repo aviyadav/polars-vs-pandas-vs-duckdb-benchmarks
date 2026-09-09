@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import duckdb
 
 # Define paths
@@ -74,6 +75,8 @@ bronze_count = con.execute("SELECT COUNT(*) FROM bronze.events").fetchone()[0]
 
 print("Silver layer complete!")
 print(f"Bronze Rows: {bronze_count:,}")
-print(f"Silver Rows: {silver_count:,} (Filtered {bronze_count - silver_count:,} corrupt or outlier records)")
+print(
+    f"Silver Rows: {silver_count:,} (Filtered {bronze_count - silver_count:,} corrupt or outlier records)"
+)
 
 con.close()

@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import duckdb
 
 # Resolve project paths dynamically
@@ -41,5 +42,7 @@ con.execute(f"""
     FROM read_csv('{CSV_PATH}', all_varchar=True);
 """)
 
-print(f"Bronze layer loaded successfully! Row count: {con.execute('SELECT COUNT(*) FROM bronze.events').fetchone()[0]}")
+print(
+    f"Bronze layer loaded successfully! Row count: {con.execute('SELECT COUNT(*) FROM bronze.events').fetchone()[0]}"
+)
 con.close()

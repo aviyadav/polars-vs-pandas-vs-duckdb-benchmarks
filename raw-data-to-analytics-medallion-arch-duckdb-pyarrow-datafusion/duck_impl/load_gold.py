@@ -1,4 +1,5 @@
 from pathlib import Path
+
 import duckdb
 
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -67,7 +68,9 @@ con.execute("""
 """)
 
 # Print Summary Metrics
-marts_count = con.execute("SELECT COUNT(*) FROM gold.daily_channel_performance").fetchone()[0]
+marts_count = con.execute(
+    "SELECT COUNT(*) FROM gold.daily_channel_performance"
+).fetchone()[0]
 users_count = con.execute("SELECT COUNT(*) FROM gold.dim_users").fetchone()[0]
 orders_count = con.execute("SELECT COUNT(*) FROM gold.fct_orders").fetchone()[0]
 

@@ -81,8 +81,6 @@ uv run python arrow_impl/generate_dirty_data.py
 ### Option 1: Run Full Pipeline Orchestration
 ```bash
 uv run python arrow_impl/run_pipeline.py
-
-uv run python arrow_impl\generate_dirty_data.py --rows 10000000
 ```
 
 ### Option 2: Step-by-Step Execution
@@ -107,7 +105,9 @@ uv run python arrow_impl/load_gold.py
 from datafusion import SessionContext
 
 ctx = SessionContext()
-ctx.register_parquet("mart", "arrow_impl/storage/gold/daily_channel_performance.parquet")
+ctx.register_parquet(
+    "mart", "arrow_impl/storage/gold/daily_channel_performance.parquet"
+)
 
 df = ctx.sql("""
     SELECT 

@@ -1,11 +1,10 @@
-from pathlib import Path
-import os
 import shutil
 import time
-import datafusion
-from datafusion import SessionContext
+from pathlib import Path
+
 import pyarrow as pa
 import pyarrow.parquet as pq
+from datafusion import SessionContext
 
 # Resolve project paths dynamically
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -36,14 +35,16 @@ ctx = SessionContext()
 
 # 2. Define schema with all columns as Utf8 (String) for resilient ingestion
 # This prevents premature type casting errors on dirty/corrupt data
-bronze_schema = pa.schema([
-    ("event_date", pa.string()),
-    ("country", pa.string()),
-    ("channel", pa.string()),
-    ("user_id", pa.string()),
-    ("order_id", pa.string()),
-    ("revenue", pa.string()),
-])
+bronze_schema = pa.schema(
+    [
+        ("event_date", pa.string()),
+        ("country", pa.string()),
+        ("channel", pa.string()),
+        ("user_id", pa.string()),
+        ("order_id", pa.string()),
+        ("revenue", pa.string()),
+    ]
+)
 
 # 3. Register CSV with all_varchar equivalent schema
 ctx.register_csv("raw_events_csv", str(CSV_PATH), schema=bronze_schema)
